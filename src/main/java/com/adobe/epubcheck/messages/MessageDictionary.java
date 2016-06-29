@@ -342,6 +342,7 @@ public class MessageDictionary
       map.put(MessageId.SCP_009, Severity.USAGE);
       map.put(MessageId.SCP_010, Severity.USAGE);
 
+      // hyeyeong change serverity
       map.put(MessageId.KEAT_001, Severity.ERROR);
       map.put(MessageId.KEAT_002, Severity.ERROR);
       map.put(MessageId.KEAT_003, Severity.ERROR);

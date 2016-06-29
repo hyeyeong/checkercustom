@@ -1,6 +1,9 @@
 package com.adobe.epubcheck.api;
 
+import java.io.File;
+
 import com.adobe.epubcheck.ctc.xml.HTMLTagsAnalyseHandler;
+import com.adobe.epubcheck.ctc.xml.XMLContentDocParser;
 import com.adobe.epubcheck.util.EPUBVersion;
 
 
@@ -8,8 +11,9 @@ public class EpubCheckStarter
 {	
     public static void main(String[] args)
     {
-        String filePath = "~/Documents/workspace/Section0005.xhtml";
-        //File epubFile = new File(filePath); 
+        String filePath = "/Users/hyeyeong/Section0006.xhtml";
+        File epubFile = new File(filePath);
+        Report report = null;
         //EpubCheck epubCheck = new EpubCheck(epubFile);
         //epubCheck.validate();
         HTMLTagsAnalyseHandler htmlHandler = new HTMLTagsAnalyseHandler();
@@ -17,6 +21,7 @@ public class EpubCheckStarter
         htmlHandler.setVersion(EPUBVersion.VERSION_3);
         //htmlHandler.startDocument();
         
-        //XMLContentDocParser xmlParser = new XMLContentDocParser();
+        XMLContentDocParser xmlParser = new XMLContentDocParser(filePath, report, null);
+        xmlParser.parseDoc(filePath, htmlHandler);
     }
 }

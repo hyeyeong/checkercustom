@@ -1,6 +1,7 @@
 package com.adobe.epubcheck.ctc.xml;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -27,6 +28,9 @@ public class XMLContentDocParser
   private final ZipFile zip;
   private final Hashtable<String, EncryptionFilter> enc;
   private final Report report;
+  //private File file;
+  private String filePath;
+  private boolean isUnitFileMode = false;
 
   public XMLContentDocParser(ZipFile zip, Report report)
   {
@@ -34,13 +38,26 @@ public class XMLContentDocParser
     this.enc = new Hashtable<String, EncryptionFilter>();
     this.report = report;
   }
+  
+  // hyeyeong
+  public XMLContentDocParser(String filePath, Report report, ZipFile zip)
+  {
+	  this.zip = null;
+	  this.filePath = filePath;
+	  this.report = report;
+	  this.enc = new Hashtable<String, EncryptionFilter>();
+	  isUnitFileMode = true;
+  }
 
   public void parseDoc(String fileEntry, DefaultHandler handler)
   {
     InputStream is = null;
     try
     {
-      is = getInputStream(fileEntry);
+      if (isUnitFileMode)
+    	  is = getHtmlInputStream();
+      else
+    	  is = getInputStream(fileEntry);
 
       SAXParserFactory factory = SAXParserFactory.newInstance();
       //factory.setValidating(false);
@@ -66,6 +83,7 @@ public class XMLContentDocParser
         message = message.substring(0, message.indexOf("("));
       }
       message = message.trim();
+      System.out.println(message);
       report.message(MessageId.RSC_001, EPUBLocation.create(fileEntry), message);
     }
     catch (IOException e)
@@ -117,5 +135,12 @@ public class XMLContentDocParser
       return filter.decrypt(in);
     }
     return null;
+  }
+  
+  // hyeyeong
+  InputStream getHtmlInputStream() throws IOException
+  {
+	  InputStream in = new FileInputStream(filePath);
+	  return in;
   }
 }

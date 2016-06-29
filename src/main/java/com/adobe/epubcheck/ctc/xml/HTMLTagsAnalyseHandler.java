@@ -23,6 +23,8 @@ import com.adobe.epubcheck.util.EpubConstants;
 import com.adobe.epubcheck.util.NamespaceHelper;
 import com.twelvemonkeys.lang.StringUtil;
 
+import net.sf.saxon.expr.instruct.Message;
+
 public class HTMLTagsAnalyseHandler extends DefaultHandler
 {
   private String fileName;
@@ -272,7 +274,9 @@ public class HTMLTagsAnalyseHandler extends DefaultHandler
     {
     	if (null == attributes.getValue("xmlns:epub"))
 		{
-    		report.message(MessageId.KEAT_002, EPUBLocation.create(this.getFileName(), locator.getLineNumber(), locator.getColumnNumber()), tagName);
+    		//hyeyeong
+    		System.out.println(MessageId.KEAT_002);
+    		//report.message(MessageId.KEAT_002, EPUBLocation.create(this.getFileName(), locator.getLineNumber(), locator.getColumnNumber()), tagName);
 		}
     
     	if ((null != attributes.getValue("lang") && !StringUtil.isEmpty(attributes.getValue("lang"))) && (null != attributes.getValue("xml:lang") && !StringUtil.isEmpty(attributes.getValue("xml:lang"))))
@@ -614,7 +618,9 @@ public class HTMLTagsAnalyseHandler extends DefaultHandler
       {
         if (!hasTitle)
         {
-          report.message(MessageId.HTM_033, EPUBLocation.create(this.getFileName(), locator.getLineNumber(), locator.getColumnNumber()));
+          // hyeyeong
+          System.out.println(MessageId.HTM_033);
+          //report.message(MessageId.HTM_033, EPUBLocation.create(this.getFileName(), locator.getLineNumber(), locator.getColumnNumber()));
         }
         if (isFixed() && !hasViewport)
         {
